@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/HennadiiZ/18_ForkifyApp_JS_Ud/issues"
   },
-  "homepage": "https://github.com/HennadiiZ/18_ForkifyApp_JS_Ud#readme"
+  "homepage": "https://github.com/HennadiiZ/18_ForkifyApp_JS_Ud#readme",
+  "devDependencies": {
+    "parcel": "^2.7.0"
+  }
 }

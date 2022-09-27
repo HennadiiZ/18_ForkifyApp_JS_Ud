@@ -534,7 +534,8 @@ function hmrAcceptRun(bundle, id) {
 },{}],"aenu9":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 //import icons from '../img/icons.svg'; // Parcel 1
-var _webImmediateJs = require("core-js/modules/web.immediate.js"); // fetch(`https://forkify-api.herokuapp.com/api/v2/recipes/:id`)
+var _webImmediateJs = require("core-js/modules/web.immediate.js"); // ------ the same part 
+ // fetch(`https://forkify-api.herokuapp.com/api/v2/recipes/:id`)
  // https://forkify-api.herokuapp.com/api/v2/recipes/5ed6604591c37cdc054bc886?key=<insert your key>
  // https://forkify-api.herokuapp.com/api/v2/recipes/5ed6604591c37cdc054bc886
 var _iconsSvg = require("url:../img/icons.svg"); // Parcel 2
@@ -563,11 +564,15 @@ const renderSpinner = function(parentEl) {
 };
 const showRecipe = async function() {
     try {
+        const id = window.location.hash.slice(1);
+        //console.log(id);
+        if (!id) return;
         renderSpinner(recipeContainer);
         const res = await fetch(//`https://forkify-api.herokuapp.com/api/v2/recipes/5ed6604591c37cdc054bc886`
-        `https://forkify-api.herokuapp.com/api/v2/recipes/5ed6604591c37cdc054bc971`);
+        //`https://forkify-api.herokuapp.com/api/v2/recipes/5ed6604591c37cdc054bc971`
+        `https://forkify-api.herokuapp.com/api/v2/recipes/${id}`);
         const data = await res.json();
-        console.log(res, data);
+        //console.log(res, data);
         if (!res.ok) throw new Error(`${res.message} (${res.status})`);
         // let recipe = data.data.recipe;
         let { recipe  } = data.data;
@@ -581,7 +586,7 @@ const showRecipe = async function() {
             cookingTime: recipe.cooking_time,
             ingredients: recipe.ingredients
         };
-        console.log("recipe", recipe);
+        //console.log('recipe', recipe);
         const markup = `
         <figure class="recipe__fig">
           <img src="${recipe.image}" alt="${recipe.title}" class="recipe__img" />
@@ -675,7 +680,11 @@ const showRecipe = async function() {
         alert(err);
     }
 };
-showRecipe();
+// showRecipe();
+// ------ the same part 
+//['hashchange', 'load'].forEach(ev => window.addEventListener(ev, showRecipe));
+window.addEventListener("hashchange", showRecipe);
+window.addEventListener("load", showRecipe);
 
 },{"core-js/modules/web.immediate.js":"49tUX","url:../img/icons.svg":"loVOp","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","regenerator-runtime/runtime":"dXNgZ"}],"49tUX":[function(require,module,exports) {
 // TODO: Remove this module from `core-js@4` since it's split to modules listed below

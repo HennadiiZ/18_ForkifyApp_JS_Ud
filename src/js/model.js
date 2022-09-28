@@ -34,5 +34,4 @@ export const loadRecipe = async function (id) {
     } catch (err) {
       alert(err.message);
     }
-
 };

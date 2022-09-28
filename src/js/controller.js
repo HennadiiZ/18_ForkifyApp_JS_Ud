@@ -19,20 +19,6 @@ const timeout = function (s) {
 
 // https://forkify-api.herokuapp.com/v2
 
-///////////////////////////////////////
-// const renderSpinner = function (parentEl) {
-//   const markup = `
-//   <div class="spinner">
-//     <svg>
-//       <use href="${icons}#icon-loader"></use>
-//     </svg>
-//   </div> 
-//   `;
-
-//   parentEl.innerHTML = '';
-//   parentEl.insertAdjacentHTML('afterbegin', markup)
-// }
-
 const controlRecipies = async function() {
   try {
     const id = window.location.hash.slice(1);

@@ -533,8 +533,7 @@ function hmrAcceptRun(bundle, id) {
 
 },{}],"aenu9":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-var _webImmediateJs = require("core-js/modules/web.immediate.js"); // ------ the same part 
- // fetch(`https://forkify-api.herokuapp.com/api/v2/recipes/:id`)
+var _webImmediateJs = require("core-js/modules/web.immediate.js"); // fetch(`https://forkify-api.herokuapp.com/api/v2/recipes/:id`)
  // https://forkify-api.herokuapp.com/api/v2/recipes/5ed6604591c37cdc054bc886?key=<insert your key>
  // https://forkify-api.herokuapp.com/api/v2/recipes/5ed6604591c37cdc054bc886
 var _runtime = require("regenerator-runtime/runtime");
@@ -546,19 +545,18 @@ const recipeContainer = document.querySelector(".recipe");
 const controlRecipies = async function() {
     try {
         const id = window.location.hash.slice(1);
-        await _modelJs.loadRecipe(id);
-        // const { recipe } = model.state;
         if (!id) return;
         (0, _recipeViewDefault.default).renderSpinner();
+        await _modelJs.loadRecipe(id);
         (0, _recipeViewDefault.default).render(_modelJs.state.recipe);
     } catch (err) {
-        alert(err);
+        console.log(err);
     }
 };
-// ------ the same part 
-//['hashchange', 'load'].forEach(ev => window.addEventListener(ev, controlRecipies));
-window.addEventListener("hashchange", controlRecipies);
-window.addEventListener("load", controlRecipies);
+const init = function() {
+    (0, _recipeViewDefault.default).addHandlerRender(controlRecipies);
+};
+init();
 
 },{"core-js/modules/web.immediate.js":"49tUX","regenerator-runtime/runtime":"dXNgZ","./model.js":"Y4A21","./views/recipeView":"l60JC","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"49tUX":[function(require,module,exports) {
 // TODO: Remove this module from `core-js@4` since it's split to modules listed below
@@ -2320,7 +2318,8 @@ const TIMEOUT_SECONDS = 10;
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "getJSON", ()=>getJSON);
-var _helpers = require("./helpers");
+var _regeneratorRuntime = require("regenerator-runtime");
+var _config = require("./config");
 const timeout = function(s) {
     return new Promise(function(_, reject) {
         setTimeout(function() {
@@ -2330,9 +2329,10 @@ const timeout = function(s) {
 };
 const getJSON = async function(url) {
     try {
+        const fetchPro = fetch(url);
         const res = await Promice.race([
-            fetch(url),
-            timeout((0, _helpers.TIMEOUT_SECONDS))
+            fetchPro,
+            timeout((0, _config.TIMEOUT_SECONDS))
         ]);
         const data = await res.json();
         if (!res.ok) throw new Error(`${res.message} (${res.status})`);
@@ -2342,7 +2342,7 @@ const getJSON = async function(url) {
     }
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./helpers":"hGI1E"}],"l60JC":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./config":"k5Hzs","regenerator-runtime":"dXNgZ"}],"l60JC":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _iconsSvg = require("url:../../img/icons.svg");
@@ -2371,6 +2371,14 @@ class RecipeView {
         this.#parentElement.innerHTML = "";
         this.#parentElement.insertAdjacentHTML("afterbegin", markup);
     };
+    addHandlerRender(handler) {
+        [
+            "hashchange",
+            "load"
+        ].forEach((ev)=>window.addEventListener(ev, handler));
+    // window.addEventListener('hashchange', handler);
+    // window.addEventListener('load', handler);
+    }
      #generateMarkup() {
         return `
         <figure class="recipe__fig">

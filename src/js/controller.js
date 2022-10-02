@@ -11,27 +11,20 @@ const controlRecipies = async function() {
   try {
     const id = window.location.hash.slice(1);
 
-    await model.loadRecipe(id);
-    // const { recipe } = model.state;
-
     if (!id) return;
-
     recipeView.renderSpinner();
-
+    await model.loadRecipe(id);
     recipeView.render(model.state.recipe);
 
   } catch (err) {
-    alert(err);
+    console.log(err);
   }
 }
 
-
-
-// ------ the same part 
-//['hashchange', 'load'].forEach(ev => window.addEventListener(ev, controlRecipies));
-window.addEventListener('hashchange', controlRecipies);
-window.addEventListener('load', controlRecipies);
-// ------ the same part 
+const init = function() {
+  recipeView.addHandlerRender(controlRecipies);
+}
+init();
 
 // fetch(`https://forkify-api.herokuapp.com/api/v2/recipes/:id`)
 // https://forkify-api.herokuapp.com/api/v2/recipes/5ed6604591c37cdc054bc886?key=<insert your key>

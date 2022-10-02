@@ -533,26 +533,15 @@ function hmrAcceptRun(bundle, id) {
 
 },{}],"aenu9":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-//import icons from '../img/icons.svg'; // Parcel 1
-// import icons from 'url:../img/icons.svg'; // Parcel 2
-//console.log(icons);
 var _webImmediateJs = require("core-js/modules/web.immediate.js"); // ------ the same part 
  // fetch(`https://forkify-api.herokuapp.com/api/v2/recipes/:id`)
  // https://forkify-api.herokuapp.com/api/v2/recipes/5ed6604591c37cdc054bc886?key=<insert your key>
  // https://forkify-api.herokuapp.com/api/v2/recipes/5ed6604591c37cdc054bc886
 var _runtime = require("regenerator-runtime/runtime");
-// import loadRecipe from './model';
 var _modelJs = require("./model.js");
 var _recipeView = require("./views/recipeView");
 var _recipeViewDefault = parcelHelpers.interopDefault(_recipeView);
 const recipeContainer = document.querySelector(".recipe");
-// const timeout = function (s) {
-//   return new Promise(function (_, reject) {
-//     setTimeout(function () {
-//       reject(new Error(`Request took too long! Timeout after ${s} second`));
-//     }, s * 1000);
-//   });
-// };
 // https://forkify-api.herokuapp.com/v2
 const controlRecipies = async function() {
     try {

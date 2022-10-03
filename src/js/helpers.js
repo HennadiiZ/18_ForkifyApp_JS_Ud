@@ -1,5 +1,5 @@
 import { async } from 'regenerator-runtime';
-import { TIMEOUT_SECONDS } from "./config"
+import { TIMEOUT_SECONDS } from "./config.js"
 
 const timeout = function (s) {
     return new Promise(function (_, reject) {
@@ -11,13 +11,13 @@ const timeout = function (s) {
 
 export const getJSON = async function(url) {  
     try {
-        const fetchPro = fetch(url);
-        const res = await Promice.race([fetchPro, timeout(TIMEOUT_SECONDS)]);
-        const data = await res.json();
-
-        if (!res.ok) throw new Error(`${res.message} (${res.status})`);
-        return data;
+      // const fetchPro = fetch(url);
+      // const res = await Promice.race([fetchPro, timeout(TIMEOUT_SECONDS)]);
+      const res = await fetch(url);
+      const data = await res.json();
+      if (!res.ok) throw new Error(`${data.message} (${res.status})`);
+      return data;
     } catch(err) {
-        throw err;
+      throw err;
     }
 }
